@@ -1,2 +1,0 @@
-[console_scripts]
-ffxiv-macro-gen = ffxiv_macro_gen.cli:main
