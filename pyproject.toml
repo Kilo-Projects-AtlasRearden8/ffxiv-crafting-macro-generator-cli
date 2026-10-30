@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ffxiv-crafting-macro-gen"
+version = "0.1.0"
+description = "Python CLI that generates FFXIV crafting macros from recipe and rotation inputs, with step limits and macro splitting."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [{name = "Asdale Dynamics, LLC"}]
+keywords = ["ffxiv", "crafting", "macro", "cli", "fan-project"]
+
+[project.scripts]
+ffxiv-macro-gen = "ffxiv_macro_gen.cli:main"
+
+[tool.setuptools]
+packages = ["ffxiv_macro_gen"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

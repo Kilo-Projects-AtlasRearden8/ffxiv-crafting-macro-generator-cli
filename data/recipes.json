@@ -1,0 +1,26 @@
+[
+  {
+    "id": "recipe-001",
+    "name": "Ingenuate Mythril Ingot",
+    "level": 90,
+    "job": "Blacksmith",
+    "durability": 80,
+    "max_quality": 1000
+  },
+  {
+    "id": "recipe-002",
+    "name": "Ingenuate Mythril Plate",
+    "level": 90,
+    "job": "Blacksmith",
+    "durability": 80,
+    "max_quality": 1000
+  },
+  {
+    "id": "recipe-003",
+    "name": "Razor Moss Socks",
+    "level": 90,
+    "job": "Leatherworker",
+    "durability": 70,
+    "max_quality": 1000
+  }
+]

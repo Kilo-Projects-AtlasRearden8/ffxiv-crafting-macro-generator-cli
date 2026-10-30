@@ -1,0 +1,15 @@
+LICENSE
+README.md
+pyproject.toml
+ffxiv_crafting_macro_gen.egg-info/PKG-INFO
+ffxiv_crafting_macro_gen.egg-info/SOURCES.txt
+ffxiv_crafting_macro_gen.egg-info/dependency_links.txt
+ffxiv_crafting_macro_gen.egg-info/entry_points.txt
+ffxiv_crafting_macro_gen.egg-info/top_level.txt
+ffxiv_macro_gen/__init__.py
+ffxiv_macro_gen/cli.py
+ffxiv_macro_gen/exporter.py
+ffxiv_macro_gen/generator.py
+ffxiv_macro_gen/models.py
+ffxiv_macro_gen/storage.py
+tests/test_macro_generation.py
