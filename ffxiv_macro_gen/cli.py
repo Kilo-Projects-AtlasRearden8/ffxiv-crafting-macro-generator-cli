@@ -90,13 +90,23 @@ def _cmd_list(items: list, label: str) -> int:
 def _cmd_add(path: str, loader, adder, label: str) -> int:
     with open(path, "r", encoding="utf-8") as handle:
         data = json.load(handle)
-    item = loader(data)
-    try:
-        adder(item)
-    except ValueError as exc:
-        print(f"error: {exc}", file=sys.stderr)
-        return 1
-    print(f"added {label}: {getattr(item, 'name', getattr(item, 'id', item))}")
+    if isinstance(data, list):
+        for entry in data:
+            item = loader(entry)
+            try:
+                adder(item)
+            except ValueError as exc:
+                print(f"error: {exc}", file=sys.stderr)
+                return 1
+        print(f"added {len(data)} {label}(s) from {path}")
+    else:
+        item = loader(data)
+        try:
+            adder(item)
+        except ValueError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 1
+        print(f"added {label}: {getattr(item, 'name', getattr(item, 'id', item))}")
     return 0
 
 

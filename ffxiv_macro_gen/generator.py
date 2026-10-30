@@ -20,35 +20,37 @@ class MacroGenerator:
     def generate(self, rotation: Rotation, macro_name: Optional[str] = None) -> list[Macro]:
         """Generate macros from a rotation, splitting across the step limit.
 
-        Each step contributes its action line plus an optional /wait line.
+        Steps are kept together as much as possible: a step's ``/ac`` line and
+        its ``/wait`` line stay in the same macro part whenever they fit.
         Macros are split so no macro exceeds ``steps_per_macro`` command lines.
         """
         name = macro_name or rotation.name
-        all_lines: list[str] = []
-        for step in rotation.steps:
-            all_lines.extend(step.to_macro_lines())
+        all_parts: list[list[str]] = []
+        current: list[str] = []
 
-        parts = self._split_lines(all_lines, self.steps_per_macro)
+        for step in rotation.steps:
+            step_lines = step.to_macro_lines()
+            if not step_lines:
+                continue
+            if current and len(current) + len(step_lines) > self.steps_per_macro:
+                all_parts.append(current)
+                current = []
+            current.extend(step_lines)
+
+        if current or not all_parts:
+            all_parts.append(current)
+
         macros: list[Macro] = []
-        for index, part_lines in enumerate(parts, start=1):
+        for index, part_lines in enumerate(all_parts, start=1):
             macros.append(
                 Macro(
                     name=name,
                     lines=part_lines,
                     part=index,
-                    total_parts=len(parts),
+                    total_parts=len(all_parts),
                 )
             )
         return macros
-
-    @staticmethod
-    def _split_lines(lines: list[str], limit: int) -> list[list[str]]:
-        if not lines:
-            return [[]]
-        chunks: list[list[str]] = []
-        for i in range(0, len(lines), limit):
-            chunks.append(lines[i : i + limit])
-        return chunks
 
     def generate_recipe_macro(self, recipe_name: str, steps: list[Step]) -> list[Macro]:
         """Convenience: generate macros from an inline step list."""
